@@ -13,6 +13,7 @@ private:
 public:
     RelojManager();
     bool iniciar();
+    void sincronizarHoraPorWiFi(const char* ssid, const char* password);
     String obtenerHora();
     String obtenerFecha();
 };

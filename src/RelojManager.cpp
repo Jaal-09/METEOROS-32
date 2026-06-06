@@ -1,32 +1,85 @@
 #include "RelojManager.h"
+#include <WiFi.h>
+#include "time.h"
 
 RelojManager::RelojManager() {
-    // Constructor vacío, el bus I2C se inicia en el método iniciar
+    // Constructor vacío
 }
 
 bool RelojManager::iniciar() {
-
-    // Intentar enlazar con el chip físico por la dirección I2C nativa
     if (!rtc.begin()) {
         Serial.println("[ERROR] No se detecta el hardware del DS1307.");
         return false;
     }
-
-    // Si es la primera vez que se monta
-    if (!rtc.isrunning()) {
-        Serial.println("[RTC] El reloj no estaba corriendo. Sincronizando con la hora de compilacion...");
-
-        // Ajusta el reloj con la fecha y hora exacta en la que se le dio "Upload" 
-        rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
-    }
-    
-    Serial.println("[RTC] Inicializado correctamente.");
     return true;
 }
 
-String RelojManager::formatearDosDigitos(int numero) {
+void RelojManager::sincronizarHoraPorWiFi(const char* ssid, const char* password) {
+    Serial.println("[NTP] Conectando a Wi-Fi para actualizar hora...");
+    WiFi.begin(ssid, password);
 
-    // Agrega un cero a la izquierda si el número es menor a 10 
+    // Esperar máximo 15 segundos a que se conecte a la red física
+    int intentosWifi = 0;
+    while (WiFi.status() != WL_CONNECTED && intentosWifi < 30) {
+        delay(500);
+        Serial.print(".");
+        intentosWifi++;
+    }
+
+    if (WiFi.status() == WL_CONNECTED) {
+        Serial.println("\n[NTP] ¡Conectado al Wi-Fi con éxito!");
+        
+        // ⏳ TIEMPO DE ESPERA CRÍTICO: 
+        // Dejamos pasar 3 segundos para que el router estabilice la IP del ESP32
+        Serial.println("[NTP] Esperando estabilidad de red (3s)...");
+        delay(3000); 
+        
+        // Configurar la zona horaria de Colombia (UTC-5)
+        configTime(-18000, 0, "pool.ntp.org", "time.nist.gov");
+        
+        struct tm timeinfo;
+        bool horaObtenida = false;
+        int intentosNTP = 0;
+        
+        // 🔄 Bucle de reintentos para el servidor de internet
+        while (!horaObtenida && intentosNTP < 5) {
+            intentosNTP++;
+            Serial.printf("[NTP] Intentando obtener hora (Intento %d de 5)...\n", intentosNTP);
+            
+            if (getLocalTime(&timeinfo)) {
+                horaObtenida = true;
+                // Inyectar la hora de internet directo al chip físico DS1307
+                rtc.adjust(DateTime(
+                    timeinfo.tm_year + 1900, 
+                    timeinfo.tm_mon + 1, 
+                    timeinfo.tm_mday, 
+                    timeinfo.tm_hour, 
+                    timeinfo.tm_min, 
+                    timeinfo.tm_sec
+                ));
+                Serial.println("[NTP] ¡Módulo DS1307 sincronizado con éxito!");
+            } else {
+                Serial.println("[WARNING] Servidor ocupado. Esperando 2 segundos para reintentar...");
+                delay(2000); // Espera estratégica antes de volver a preguntar
+            }
+        }
+        
+        if (!horaObtenida) {
+            Serial.println("[ERROR FINAL] No se pudo obtener la hora tras 5 intentos.");
+        }
+        
+    } else {
+        Serial.println("\n[ERROR Wi-Fi] No se pudo conectar a la red.");
+    }
+
+    // 🕒 Dejamos el Wi-Fi encendido 2 segundos más por seguridad antes de tumbarlo
+    delay(2000);
+    WiFi.disconnect(true);
+    WiFi.mode(WIFI_OFF);
+    Serial.println("[NTP] Wi-Fi apagado correctamente. Bucle local iniciado.");
+}
+
+String RelojManager::formatearDosDigitos(int numero) {
     if (numero < 10) {
         return "0" + String(numero);
     }
