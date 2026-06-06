@@ -23,3 +23,26 @@ bool RelojManager::iniciar() {
     Serial.println("[RTC] Inicializado correctamente.");
     return true;
 }
+
+String RelojManager::formatearDosDigitos(int numero) {
+
+    // Agrega un cero a la izquierda si el número es menor a 10 
+    if (numero < 10) {
+        return "0" + String(numero);
+    }
+    return String(numero);
+}
+
+String RelojManager::obtenerHora() {
+    DateTime ahora = rtc.now();
+    return formatearDosDigitos(ahora.hour()) + ":" +
+           formatearDosDigitos(ahora.minute()) + ":" +
+           formatearDosDigitos(ahora.second());
+}
+
+String RelojManager::obtenerFecha() {
+    DateTime ahora = rtc.now();
+    return formatearDosDigitos(ahora.day()) + "/" +
+           formatearDosDigitos(ahora.month()) + "/" +
+           String(ahora.year());
+}
