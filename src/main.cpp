@@ -15,8 +15,8 @@ const unsigned long INTERVALO_VISTA = 7000;
 bool primeraActualizacion = true;               
 
 // Configuracion WIFI
-const char* WIFI_SSID = "";
-const char* WIFI_PASS = "";
+const char* WIFI_SSID = "mg52"; 
+const char* WIFI_PASS = "wifi1234"; 
 
 void setup() {
     Serial.begin(115200);
@@ -48,15 +48,20 @@ void loop() {
         String horaActual  = miReloj.obtenerHora();
         String fechaActual = miReloj.obtenerFecha();
         
-       // 🎯 Lecturas reales con el nuevo formato POO profesional
+        // Lecturas reales del sensor BME280
         float t_real = miBme.obtenerTemperatura();
         float h_real = miBme.obtenerHumedad();
-        float l_simulada = 420.0;
 
-        Serial.printf("[SISTEMA] Temp: %.1f C | Hum: %.1f %%\n", t_real, h_real);
+        //Agregado leer presion real
+        float p_real = miBme.obtenerPresion();     
         
-        miPantalla.actualizarInterfaz(horaActual, fechaActual, t_real, h_real, l_simulada);
+        float l_simulada = 420.0; // Se mantiene fija hasta conectar el BH1750
+
+        // Imprimimos también la presión en el Monitor Serie para verificar
+        Serial.printf("[SISTEMA] Temp: %.1f C | Hum: %.1f %% | Pres: %.1f hPa\n", t_real, h_real, p_real);
         
+        // le pasamos los 6 parámetros requeridos (incluye p_real al final)
+        miPantalla.actualizarInterfaz(horaActual, fechaActual, t_real, h_real, l_simulada, p_real);
     }
 
     if (millis() - tiempoUltimoCambioVista >= INTERVALO_VISTA) {

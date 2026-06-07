@@ -17,7 +17,8 @@ public:
     void mostrarTexto(String texto, int x, int y, int tamano, uint16_t color, uint16_t fondo);
     // Al tocar la pantalla cambiará de estado
     void cambiarVista(); 
-    void actualizarInterfaz(String hora, String fecha, float temp, float hum, float lux);
+    // Añade la presión como parámetro al final
+    void actualizarInterfaz(String hora, String fecha, float temp, float hum, float luz, float presion);
 };
 
 #endif
