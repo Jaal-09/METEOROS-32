@@ -29,7 +29,7 @@ void setup() {
     miReloj.iniciar();
     miBme.iniciar();
     
-    // Inicia el bus Wire nativo en los pines ganadores 21 y 22
+    // Inicia el bus Wire nativo en los pines 21 y 22
     miLuz.iniciar();       
     
     miPantalla.mostrarTexto("Sincronizando hora ...", 10, 100, 2, TFT_WHITE, TFT_NAVY);
@@ -69,7 +69,7 @@ void loop() {
         
         // miLuz.mostrarLecturaSerial();
         
-        // Pasamos los 6 parámetros en tu orden exacto
+        // Pasamos los 6 parámetros
         miPantalla.actualizarInterfaz(horaActual, fechaActual, t_real, h_real, l_real, p_real);
     }
 
