@@ -17,8 +17,8 @@ const unsigned long INTERVALO_VISTA = 7000;
 bool primeraActualizacion = true;               
 
 // Configuracion WIFI
-const char* WIFI_SSID = "mg52"; 
-const char* WIFI_PASS = "wifi1234"; 
+const char* WIFI_SSID = ""; 
+const char* WIFI_PASS = ""; 
 
 void setup() {
     Serial.begin(115200);
@@ -28,6 +28,8 @@ void setup() {
     miPantalla.iniciar();
     miReloj.iniciar();
     miBme.iniciar();
+    
+    // Inicia el bus Wire nativo en los pines ganadores 21 y 22
     miLuz.iniciar();       
     
     miPantalla.mostrarTexto("Sincronizando hora ...", 10, 100, 2, TFT_WHITE, TFT_NAVY);
@@ -58,13 +60,16 @@ void loop() {
         //Agregado leer presion real
         float p_real = miBme.obtenerPresion();     
         
-        //Lectura REAL del BH1750
-        float l_real = miLuz.obtenerLuz(); 
+        // Lectura REAL del BH1750 desde el bus nativo 21 y 22
+        float l_real = miLuz.obtenerLux(); 
 
         // Imprimimos todo en el Monitor Serie manteniendo tu formato original con los Lux al final
         Serial.printf("[SISTEMA] Temp: %.1f C | Hum: %.1f %% | Pres: %.1f hPa | Luz: %.1f lx\n", t_real, h_real, p_real, l_real);
         
-        // Pasamos los 6 parámetros 
+        
+        // miLuz.mostrarLecturaSerial();
+        
+        // Pasamos los 6 parámetros en tu orden exacto
         miPantalla.actualizarInterfaz(horaActual, fechaActual, t_real, h_real, l_real, p_real);
     }
 
