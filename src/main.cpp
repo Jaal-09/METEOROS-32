@@ -2,10 +2,12 @@
 #include "PantallaManager.h"
 #include "RelojManager.h"
 #include "Bme280Manager.h"
+#include "Bh1750Manager.h" 
 
 PantallaManager miPantalla;
 RelojManager miReloj;
 Bme280Manager miBme;
+Bh1750Manager miLuz;       
 
 unsigned long tiempoUltimaActualizacion = 0;
 unsigned long tiempoUltimoCambioVista = 0;
@@ -15,8 +17,8 @@ const unsigned long INTERVALO_VISTA = 7000;
 bool primeraActualizacion = true;               
 
 // Configuracion WIFI
-const char* WIFI_SSID = "mg52"; 
-const char* WIFI_PASS = "wifi1234"; 
+const char* WIFI_SSID = ""; 
+const char* WIFI_PASS = ""; 
 
 void setup() {
     Serial.begin(115200);
@@ -26,6 +28,7 @@ void setup() {
     miPantalla.iniciar();
     miReloj.iniciar();
     miBme.iniciar();
+    miLuz.iniciar();       
     
     miPantalla.mostrarTexto("Sincronizando hora ...", 10, 100, 2, TFT_WHITE, TFT_NAVY);
     
@@ -55,13 +58,14 @@ void loop() {
         //Agregado leer presion real
         float p_real = miBme.obtenerPresion();     
         
-        float l_simulada = 420.0; // Se mantiene fija hasta conectar el BH1750
+        //Lectura REAL del BH1750
+        float l_real = miLuz.obtenerLuz(); 
 
-        // Imprimimos también la presión en el Monitor Serie para verificar
-        Serial.printf("[SISTEMA] Temp: %.1f C | Hum: %.1f %% | Pres: %.1f hPa\n", t_real, h_real, p_real);
+        // Imprimimos todo en el Monitor Serie manteniendo tu formato original con los Lux al final
+        Serial.printf("[SISTEMA] Temp: %.1f C | Hum: %.1f %% | Pres: %.1f hPa | Luz: %.1f lx\n", t_real, h_real, p_real, l_real);
         
-        // le pasamos los 6 parámetros requeridos (incluye p_real al final)
-        miPantalla.actualizarInterfaz(horaActual, fechaActual, t_real, h_real, l_simulada, p_real);
+        // Pasamos los 6 parámetros 
+        miPantalla.actualizarInterfaz(horaActual, fechaActual, t_real, h_real, l_real, p_real);
     }
 
     if (millis() - tiempoUltimoCambioVista >= INTERVALO_VISTA) {
