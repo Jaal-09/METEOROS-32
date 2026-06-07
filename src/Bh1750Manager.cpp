@@ -5,10 +5,9 @@ Bh1750Manager::Bh1750Manager() {
 }
 
 bool Bh1750Manager::iniciar() {
-
-    Serial.println("[LUZ] Iniciando bus I2C para BH1750...");
+    Serial.println("[LUZ] Iniciando bus I2C exclusivo para BH1750...");
     
-    // GPIO 5 para SDA y GPIO 23 para SCL
+    // Configura tus pines libres con buen espacio: GPIO 5 (SDA) y GPIO 23 (SCL)
     bool busIniciado = Wire.begin(5, 23); 
     
     if (!busIniciado) {
@@ -17,14 +16,14 @@ bool Bh1750Manager::iniciar() {
     }
 
     Serial.println("[LUZ] Buscando sensor BH1750 en pines 5 y 23...");
-
-    // Vinculamos el sensor al bus 'Wire' que acabamos de mover a los pines 5 y 23
-    if (!lightSensor.begin(0x23, &Wire)) {
+    
+    // Pasamos el modo de alta resolución, la dirección 0x23 y el puntero al bus &Wire
+    if (!lightSensor.begin(BH1750::CONTINUOUS_HIGH_RES_MODE, 0x23, &Wire)) {
         Serial.println("[ERROR] ¡No se encontró el BH1750! Revisa pines 5/23 o energía.");
         sensorOperativo = false;
         return false;
     }
-
+    
     Serial.println("[LUZ] ¡Sensor BH1750 detectado en pines 5 y 23 con éxito!");
     sensorOperativo = true;
     return true;
@@ -33,6 +32,6 @@ bool Bh1750Manager::iniciar() {
 float Bh1750Manager::obtenerLuz() {
     if (!sensorOperativo) return 0.0;
 
-    // Retorna el valor real en Lux
+    // Retorna el valor real en Lux 
     return lightSensor.readLightLevel(); 
 }

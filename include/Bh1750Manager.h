@@ -3,11 +3,11 @@
 
 #include <Arduino.h>
 #include <Wire.h>
-#include <BH1750FVI.h>
+#include <BH1750.h>
 
 class Bh1750Manager {
 private:
-    BH1750FVI lightSensor;
+    BH1750 lightSensor;
     bool sensorOperativo;
 
 public:

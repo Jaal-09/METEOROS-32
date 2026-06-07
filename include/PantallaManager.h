@@ -18,7 +18,7 @@ public:
     // Al tocar la pantalla cambiará de estado
     void cambiarVista(); 
     // Añade la presión como parámetro al final
-    void actualizarInterfaz(String hora, String fecha, float temp, float hum, float luz, float presion);
+    void actualizarInterfaz(String hora, String fecha, float temp, float hum, float lux, float presion);
 };
 
 #endif

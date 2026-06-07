@@ -42,7 +42,7 @@ void PantallaManager::actualizarInterfaz(String hora, String fecha, float temp, 
         mostrarTexto("FECHA: " + fecha, 20, 60, 2, TFT_GREEN, TFT_NAVY);
         mostrarTexto("HORA:  " + hora, 20, 90, 3, TFT_WHITE, TFT_NAVY);
 
-        // Recuadro de Temperatura cambiado a AZUL (TFT_SKYBLUE)
+        // Recuadro de Temperatura en AZUL
         tft.drawRect(10, 135, 300, 55, TFT_SKYBLUE);
         mostrarTexto("TEMP: " + String(temp, 1) + " C", 20, 150, 3, TFT_SKYBLUE, TFT_NAVY);
         
@@ -50,22 +50,22 @@ void PantallaManager::actualizarInterfaz(String hora, String fecha, float temp, 
     } 
     else {
         // ================= VISTA 2: DETALLES (HUMEDAD, LUZ Y PRESIÓN) =================
-        // Recuadro Humedad (Se mantiene igual)
+        // Recuadro Humedad
         tft.drawRect(10, 45, 300, 45, TFT_CYAN);
         mostrarTexto("HUM: " + String(hum, 1) + " %", 20, 58, 2, TFT_CYAN, TFT_NAVY);
 
-        // Recuadro Iluminación (Ajustado en altura y tamaño)
+        // Recuadro Iluminación (Usa 'lux' que viene en la 5ta posición)
         tft.drawRect(10, 98, 300, 45, TFT_YELLOW);
         mostrarTexto("LUZ: " + String(lux, 0) + " lx", 20, 111, 2, TFT_YELLOW, TFT_NAVY);
         
-        // ¡NUEVO! Recuadro de Presión Atmosférica en ROJO (TFT_RED)
+        // Recuadro de Presión Atmosférica en ROJO (Usa 'presion' que viene de últimas)
         tft.drawRect(10, 151, 300, 45, TFT_RED);
         mostrarTexto("PRES: " + String(presion, 1) + " hPa", 20, 164, 2, TFT_RED, TFT_NAVY);
         
         mostrarTexto("-> Toca para regresar", 80, 204, 1, TFT_SILVER, TFT_NAVY);
     }
 
-    // Pie de página institucional (Se mantiene intacto)
+    // Pie de página institucional
     tft.drawLine(0, 218, 320, 218, TFT_SILVER);
     mostrarTexto("U. DE PAMPLONA - MECATRÓNICA", 45, 224, 1, TFT_SILVER, TFT_NAVY);
 }
