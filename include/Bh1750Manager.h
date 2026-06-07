@@ -7,13 +7,19 @@
 
 class Bh1750Manager {
 private:
-    BH1750 lightSensor;
+    BH1750 luxometro;
+    uint8_t direccionI2C;
+    int pinSDA;
+    int pinSCL;
     bool sensorOperativo;
 
 public:
-    Bh1750Manager();
+    // Constructor con el nuevo nombre de la clase (Pines 21 y 22 por defecto)
+    Bh1750Manager(uint8_t direccion = 0x23, int sda = 21, int scl = 22);
+    
     bool iniciar();
-    float obtenerLuz();
+    float obtenerLux();
+    void mostrarLecturaSerial();
 };
 
 #endif
