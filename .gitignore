@@ -1,5 +1,33 @@
-.pio
-.vscode/.browse.c_cpp.db*
+# =====================================================================
+# PlatformIO: Archivos temporales de compilación e inspección
+# =====================================================================
+.pio/
+.pioenvs/
+.piolibdeps/
+.clang_complete
+.gcc-flags.json
+
+# =====================================================================
+# VS Code: Configuraciones locales del editor
+# =====================================================================
+.vscode/.browse.vc.db
+.vscode/.cmake.unlog
+.vscode/.ctags
 .vscode/c_cpp_properties.json
 .vscode/launch.json
-.vscode/ipch
+.vscode/settings.json
+.vscode/tasks.json
+
+# =====================================================================
+# Sistema Operativo: Archivos basura locales
+# =====================================================================
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+
+# Linux
+*~
+.fuse_hidden*
+.directory
