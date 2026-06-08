@@ -10,7 +10,13 @@ Desarrollado como un sistema de firmware robusto en **PlatformIO** bajo el frame
 ## 🏛️ Institución y Autoría
 * **Institución:** Universidad de Pamplona
 * **Programa:** Ingeniería Mecatrónica  
-* **Autores:** Jesús Arias,   
+* **Autores:**
+
+- Jesus Alberto Arias Lizcano
+- Andrés Stivent Cortés Gomez 
+- Darwin David Naranjo Calderón
+- Karen Daniela Suárez Rico
+
 * **Fecha:** Junio 2026    
 
 ---
