@@ -76,9 +76,8 @@ El entorno de compilación está gestionado por las siguientes dependencias ofic
 
 ---
 
-## 🚀 Instrucciones de Compilación y Despliegue
-1. Instale **Visual Studio Code** junto con la extensión **PlatformIO IDE**.
-2. Organice los archivos respetando la estructura estándar:
+## 🚀 Estructura de Archivos
+
    ```text
    ├── include/
    │   ├── Bh1750Manager.h
