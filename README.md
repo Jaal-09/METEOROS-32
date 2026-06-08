@@ -27,23 +27,10 @@ El firmware del proyecto está estructurado bajo un modelo modular, donde cada p
 
 ---
 
-## 🎛️ Diagrama de Conexiones Físicas (Mapeo de Pines)
+## Conexiones Físicas (Mapeo de Pines)
 
 ### 📊 Configuración de Buses I2C (Aislamiento de Periféricos)
-Para evitar colisiones de direcciones en el bus y disminuir la capacitancia parásita en las líneas de datos, se han levantado dos buses I2C independientes dentro del ESP32:
-
-                  [ ESP32 D ]
-                 /            \
- Bus I2C Nativo (Wire)       Bus I2C Secundario (Wire1)
-     Pines:                      Pines:
-  SDA: GPIO 21                SDA: GPIO 18
-  SCL: GPIO 22                SCL: GPIO 19
-      |                           |
-[ Sensor BH1750 ]            [ Sensor BME280 ]
-(Dirección 0x23)             (Dirección 0x76)
-      |
-[ RTC DS1307 ]
-(Dirección 0x68)
+Para evitar colisiones de direcciones en el bus y disminuir la capacitancia parásita en las líneas de datos, se han levantado dos buses I2C independientes dentro del ESP32.
 
 ### 📌 Tabla Completa de Asignación de Pines
 
