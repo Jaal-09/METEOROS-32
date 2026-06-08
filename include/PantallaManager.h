@@ -17,10 +17,11 @@
  * @brief Gestiona la renderización en la pantalla TFT y el flujo visual entre las distintas vistas.
  */
 class PantallaManager {
+
 private:
-    TFT_eSPI tft; /**< Instancia interna de la librería TFT_eSPI encargada de comunicarse con el hardware de la pantalla. */
-   
-    int vistaActual; /**< Variable de estado del menú: 1 = Vista Principal (Tiempo/Temp), 2 = Vista Secundaria (Detalles). */
+
+    TFT_eSPI tft;   /**< Instancia interna de la librería TFT_eSPI encargada de comunicarse con el hardware de la pantalla. */
+    int vistaActual;    /**< Variable de estado del menú: 1 = Vista Principal (Tiempo/Temp), 2 = Vista Secundaria (Detalles). */
 
 public:
 
@@ -31,8 +32,8 @@ public:
     PantallaManager();
 
     /**
-     * @brief Constructor del mánager de la pantalla.
-     * @details Inicializa por defecto el estado apuntando a la primera vista en el arranque del sistema.
+     * @brief Inicializa el hardware gráfico de la pantalla.
+     * @details Configura los registros de inicio, define la orientación de pantalla horizontal (Formato paisaje) y limpia el fondo.
      */
     void iniciar();
 
@@ -59,7 +60,7 @@ public:
      */
     void cambiarVista(); 
 
-   /**
+    /**
      * @brief Renderiza y actualiza dinámicamente toda la información meteorológica en la pantalla TFT.
      * @details Dibuja los banners institucionales fijos y actualiza los recuadros de datos específicos según la vista que esté activa.
      * @param hora Cadena con el formato de tiempo hh:mm:ss.
@@ -70,7 +71,7 @@ public:
      * @param presion Valor de la presión atmosférica actual calculada en Hectopascales (hPa).
      * @param estadoLuz Texto natural generado por el mánager del BH1750 que describe la iluminación (ej: "Interior Tenue 💡").
      */
-    void actualizarInterfaz(String hora, String fecha, float temp, float hum, float lux, float presion);
+    void actualizarInterfaz(String hora, String fecha, float temp, float hum, float lux, float presion, String estadoLuz);
 };
 
 #endif
