@@ -1,12 +1,23 @@
+/**
+ * @file RelojManager.cpp
+ * @brief Implementación de la gestión del tiempo y sincronización de red.
+ * @details Desarrolla la lógica para arrancar el RTC físico, conectarse a redes Wi-Fi,
+ * consultar servidores horarios de internet (NTP) y dar un formato limpio de dos dígitos
+ * a las variables de tiempo para su despliegue visual.
+ * @date Junio 2026
+ */
+
 #include "RelojManager.h"
 #include <WiFi.h>
 #include "time.h"
 
 RelojManager::RelojManager() {
-    // Constructor vacío
+    // Constructor vacío (Las configuraciones inician formalmente en iniciar())
 }
 
 bool RelojManager::iniciar() {
+
+    // Intentamos establecer comunicación con el integrado DS1307 en su dirección I2C fija
     if (!rtc.begin()) {
         Serial.println("[ERROR] No se detecta el hardware del DS1307.");
         return false;
@@ -18,7 +29,7 @@ void RelojManager::sincronizarHoraPorWiFi(const char* ssid, const char* password
     Serial.println("[NTP] Conectando a Wi-Fi para actualizar hora...");
     WiFi.begin(ssid, password);
 
-    // Esperar máximo 15 segundos a que se conecte a la red física
+    // Bucle de espera: Máximo 15 segundos (30 intentos x 500ms) a que se asocie a la red física
     int intentosWifi = 0;
     while (WiFi.status() != WL_CONNECTED && intentosWifi < 30) {
         delay(500);
@@ -29,7 +40,7 @@ void RelojManager::sincronizarHoraPorWiFi(const char* ssid, const char* password
     if (WiFi.status() == WL_CONNECTED) {
         Serial.println("\n[NTP] ¡Conectado al Wi-Fi con éxito!");
         
-        // ⏳ TIEMPO DE ESPERA CRÍTICO: 
+        // TIEMPO DE ESPERA CRÍTICO: 
         // Dejamos pasar 3 segundos para que el router estabilice la IP del ESP32
         Serial.println("[NTP] Esperando estabilidad de red (3s)...");
         delay(3000); 
@@ -46,9 +57,11 @@ void RelojManager::sincronizarHoraPorWiFi(const char* ssid, const char* password
             intentosNTP++;
             Serial.printf("[NTP] Intentando obtener hora (Intento %d de 5)...\n", intentosNTP);
             
+            // Si el servidor NTP responde, pasamos los datos del sistema directamente al integrado RTC
             if (getLocalTime(&timeinfo)) {
                 horaObtenida = true;
-                // Inyectar la hora de internet directo al chip físico DS1307
+
+                // Inyectamos la hora de internet directo al chip físico DS1307
                 rtc.adjust(DateTime(
                     timeinfo.tm_year + 1900, 
                     timeinfo.tm_mon + 1, 
@@ -72,14 +85,19 @@ void RelojManager::sincronizarHoraPorWiFi(const char* ssid, const char* password
         Serial.println("\n[ERROR Wi-Fi] No se pudo conectar a la red.");
     }
 
-    // Dejamos el Wi-Fi encendido 2 segundos más por seguridad antes de tumbarlo
+    // Mantener el wifi un instante antes de desconectar por seguridad
     delay(2000);
+
+    // Apagamos completamente el Wi-Fi para evitar ruidos electromagnéticos 
+    // en las líneas de los mánagers analógicos/I2C y optimizar el consumo eléctrico.
     WiFi.disconnect(true);
     WiFi.mode(WIFI_OFF);
     Serial.println("[NTP] Wi-Fi apagado correctamente. Bucle local iniciado.");
 }
 
 String RelojManager::formatearDosDigitos(int numero) {
+
+    // Si el valor numérico es de un solo dígito, le concatenamos un "0" a la izquierda
     if (numero < 10) {
         return "0" + String(numero);
     }
@@ -87,13 +105,17 @@ String RelojManager::formatearDosDigitos(int numero) {
 }
 
 String RelojManager::obtenerHora() {
-    DateTime ahora = rtc.now();
+
+    // Captura los registros actuales del chip de tiempo
+    DateTime ahora = rtc.now(); 
     return formatearDosDigitos(ahora.hour()) + ":" +
            formatearDosDigitos(ahora.minute()) + ":" +
            formatearDosDigitos(ahora.second());
 }
 
 String RelojManager::obtenerFecha() {
+
+    // Captura los registros actuales del chip de tiempo
     DateTime ahora = rtc.now();
     return formatearDosDigitos(ahora.day()) + "/" +
            formatearDosDigitos(ahora.month()) + "/" +
