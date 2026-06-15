@@ -97,7 +97,8 @@ El entorno de compilación está gestionado por las siguientes dependencias ofic
    │   ├── RelojManager.cpp
    │   └── main.cpp
    └── platformio.ini
-
+   ```
+   
 ## 📚 Referencias técnicas y documentación
 
 1. **Espressif Systems (2022).** *ESP32 Technical Reference Manual*. 
