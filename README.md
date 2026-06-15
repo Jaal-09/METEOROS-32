@@ -1,9 +1,9 @@
-# 🌦️ Estación Meteorológica IoT — ESP32
+# 🌦️ METEOROS-32 Sistema Embebido de Monitoreo Atmosférico e Iluminación
 
 ## 📝 Descripción del Proyecto
-Este proyecto consiste en el desarrollo y programación de una **Estación Meteorológica Automatizada de Alta Precisión** basada en el microcontrolador **ESP32**. El sistema unifica la captura de múltiples variables ambientales de interés meteorológico, la administración del tiempo local mediante sincronización en la nube y una interfaz gráfica dinámica operada mediante hardware externo.
+**METEOROS-32** es una estación meteorológica embebida de alta precisión basada en el microcontrolador **ESP32**. El sistema integra sensores de alta precisión  **BME280** (temperatura, humedad y presión atmosférica) y **BH1750** (intensidad lumínica). para capturar datos ambientales en tiempo real.  Además, administra el tiempo local mediante sincronización en la nube (NTP) y despliega una interfaz gráfica dinámica de doble vista en una pantalla **TFT LCD de 2.4" (ILI9341)** controlada mediante un botón de hardware externo.
 
-Desarrollado como un sistema de firmware robusto en **PlatformIO** bajo el framework de **Arduino**, el código implementa principios avanzados de separación de hardware mediante programación orientada a objetos (Managers de Control) y aislamiento físico de periféricos usando múltiples buses I2C para optimizar la estabilidad de las lecturas.
+Desarrollado en **PlatformIO** bajo el framework de **Arduino**, el firmware aplica principios de **Programación Orientada a Objetos (POO)** mediante *Managers de Control* independientes, y emplea múltiples buses **I2C** para aislar periféricos, optimizando la estabilidad del sistema y la precisión de las lecturas.
 
 ---
 
@@ -12,10 +12,10 @@ Desarrollado como un sistema de firmware robusto en **PlatformIO** bajo el frame
 * **Programa:** Ingeniería Mecatrónica  
 * **Autores:**
 
-- Jesus Alberto Arias Lizcano
-- Andrés Stivent Cortés Gomez 
-- Darwin David Naranjo Calderón
-- Karen Daniela Suárez Rico
+   Jesus Alberto Arias Lizcano
+   Andrés Stivent Cortés Gomez 
+   Darwin David Naranjo Calderón
+   Karen Daniela Suárez Rico
 
 * **Fecha:** Junio 2026    
 
@@ -97,3 +97,26 @@ El entorno de compilación está gestionado por las siguientes dependencias ofic
    │   ├── RelojManager.cpp
    │   └── main.cpp
    └── platformio.ini
+
+## 📚 Referencias técnicas y documentación
+
+1. **Espressif Systems (2022).** *ESP32 Technical Reference Manual*. 
+   [Official Hardware Documentation](https://www.espressif.com/en/support/documents/technical-documents)
+2. **Adafruit Industries (2024).** *Adafruit BME280 Sensor Overview & Calibration*. 
+   [Adafruit Learning System Guide](https://learn.adafruit.com/adafruit-bme280-humidity-barometric-pressure-temperature-sensor-breakout)
+3. **Bodmer (2025).** *TFT_eSPI Library for ESP32 Parallel and SPI Interfaces*. 
+   [GitHub Repository](https://github.com/Bodmer/TFT_eSPI)
+4. **Santos, R., & Santos, S. (2023).** *ESP32: TFT LCD Touchscreen Display – 2.8 inch ILI9341 240×320 (Arduino IDE)*. 
+   [Random Nerd Tutorials Guide](https://randomnerdtutorials.com/esp32-tft-touchscreen-display-2-8-ili9341-arduino/)
+5. **ElectroPeak (2023).** *Interfacing 2.8-inch TFT LCD Touch Screen with ESP32 Step-by-Step Guide*. 
+   [ElectroPeak Learn Article](https://electropeak.com/learn/interfacing-2-8-inch-tft-lcd-touch-screen-with-esp32/)
+6. **Wouterlood, F. (2021).** *ESP32-WROOM-32 and ILI9341 TFT display – an interesting match*. 
+   [TheSolarUniverse Engineering Blog](https://thesolaruniverse.wordpress.com/2021/03/01/esp32-wroom-32-and-ili9341-tft-display-an-interesting-match/)
+7. **r/Esphome Community (2025).** *2.4" TFT LCD Connection Shield to ESP32 V1.1 (Hardware Pin Mapping & Troubleshooting)*. 
+   [Reddit Engineering Discussion](https://www.reddit.com/r/Esphome/comments/1irok4n/24_tft_lcd_connection_shield_to_esp32_v11/?tl=es-419)
+8. **Teach Me Something (2023).** *ESP32 TFT LCD Shield DHT11 Temperature & Humidity Monitor (ILI9341 2.4" Parallel Interface Setup)*. 
+   [Video Tutorial Guide](https://www.youtube.com/watch?v=xJzI6glntpA)
+9. **Eder (2024).** *Construyendo tu propia estación meteorológica IoT con ESP32: Monitoreo en tiempo real*. 
+   [Medium Engineering Publication](https://medium.com/@eder88559/construyendo-tu-propia-estaci%C3%B3n-meteorol%C3%B3gica-iot-con-esp32-monitoreo-en-tiempo-real-y-datos-en-58505fbffa18)
+10. **TecnoReBot. (2023).** *Estación meteorológica con ESP32 y DISPLAY LCD ( GUÍA COMPLETA )*. 
+    [Video Tutorial Guide](https://www.youtube.com/watch?v=jBKp-3VPRVA)

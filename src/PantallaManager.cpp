@@ -58,50 +58,25 @@ void PantallaManager::actualizarInterfaz(String hora, String fecha, float temp, 
         mostrarTexto("-> Pulsar boton para ver mas", 50, 200, 1, TFT_SILVER, TFT_NAVY);
     } 
     else {
-
         // ================= VISTA 2: DETALLES (HUMEDAD, LUZ Y PRESIÓN) =================
-    // Recuadro de Humedad
-    tft.drawRect(10, 45, 300, 45, TFT_CYAN);
-    mostrarTexto("HUM: " + String(hum, 1) + " %", 20, 58, 2, TFT_CYAN, TFT_NAVY);
-
-    // =========================================================================
-    // 🛠️ RECUADRO DE LUZ CORREGIDO (Evita el efecto fantasma 'lxlx')
-    // =========================================================================
-    tft.drawRect(10, 98, 300, 45, TFT_YELLOW);
-
-    // 1. Borramos el fondo del recuadro de texto antes de pintar para desaparecer residuos viejos
-    
-
-    // 2. Pintamos los Luxes asegurando que el color de fondo (TFT_NAVY) obligue a borrar los píxeles anteriores
-    
-
-    // 3. Pintamos el estado al lado sin emojis y bien alineado
-    mostrarTexto(estadoLuz, 170, 111, 2, TFT_WHITE, TFT_NAVY);
-    // =========================================================================
-
-    // Recuadro de Presión Atmosférica
-    tft.drawRect(10, 151, 300, 45, TFT_RED);
-    mostrarTexto("PRES: " + String(presion, 1) + " hPa", 20, 164, 2, TFT_RED, TFT_NAVY);
-
-        // ================= VISTA 2: DETALLES (HUMEDAD, LUZ Y PRESIÓN) =================
-        // Recuadro de Humedad en color cian
+        
+        // 1. Recuadro de Humedad en color cian
         tft.drawRect(10, 45, 300, 45, TFT_CYAN);
         mostrarTexto("HUMEDAD: " + String(hum, 1) + " %", 20, 58, 2, TFT_CYAN, TFT_NAVY);
 
-        // Recuadro de Iluminación en color amarillo (Muestra Lux y el Estado textual)
+        // 2. Recuadro de Iluminación en color amarillo (Muestra Lux y el Estado textual)
         tft.drawRect(10, 98, 300, 45, TFT_YELLOW);
-
-        //para evitar errores al pintar
+        
+        // Borramos el fondo interno del recuadro antes de pintar para desaparecer residuos de texto viejo
         tft.fillRect(11, 99, 298, 43, TFT_NAVY); 
-
         
         mostrarTexto("LUZ: " + String(lux, 0) + " lx", 20, 111, 2, TFT_YELLOW, TFT_NAVY);
         // Pintamos el diagnóstico natural corrido a la derecha (X=160) para que no se pisen
         mostrarTexto(estadoLuz, 160, 111, 2, TFT_WHITE, TFT_NAVY);
         
-        // Recuadro de Presión Atmosférica en color rojo
-        tft.drawRect(10, 151, 300, 45, TFT_RED);
-        mostrarTexto("PRESION: " + String(presion, 1) + " hPa", 20, 164, 2, TFT_RED, TFT_NAVY);
+        // 3. Recuadro de Presión Atmosférica en color rojo
+        tft.drawRect(10, 151, 300, 45, TFT_ORANGE);
+        mostrarTexto("PRESION: " + String(presion, 1) + " hPa", 20, 164, 2, TFT_ORANGE, TFT_NAVY);
         
         // Texto de navegación actualizado para el uso del botón físico
         mostrarTexto("-> Pulsar boton para regresar", 50, 204, 1, TFT_SILVER, TFT_NAVY);
