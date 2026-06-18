@@ -65,7 +65,7 @@ void PantallaManager::actualizarInterfaz(String hora, String fecha, float temp, 
         mostrarTexto("TEMP: " + String(temp, 1) + " C", 20, 150, 3, TFT_SKYBLUE, TFT_NAVY);
         
         // Texto de navegación actualizado para el uso del botón físico
-        mostrarTexto("-> Pulsar boton para ver mas", 50, 200, 1, TFT_SILVER, TFT_NAVY);
+        mostrarTexto("-> Pulsar boton para ver mas", 70, 200, 1, TFT_SILVER, TFT_NAVY);
     } 
     else {
         // ================= VISTA 2: DETALLES (HUMEDAD, LUZ Y PRESIÓN) =================
@@ -96,10 +96,10 @@ void PantallaManager::actualizarInterfaz(String hora, String fecha, float temp, 
         mostrarTexto(estadoPresion, 200, 164, 2, TFT_WHITE, TFT_NAVY);
         
         // Texto de navegación para el uso del botón físico
-        mostrarTexto("-> Pulsar boton para regresar", 50, 204, 1, TFT_SILVER, TFT_NAVY);
+        mostrarTexto("-> Pulsar boton para regresar", 75, 204, 1, TFT_SILVER, TFT_NAVY);
     }
 
     // Pie de página institucional estático
     tft.drawLine(0, 218, 320, 218, TFT_SILVER);
-    mostrarTexto("U. DE PAMPLONA - MECATRONICA", 45, 224, 1, TFT_SILVER, TFT_NAVY);
+    mostrarTexto("U. DE PAMPLONA - MECATRONICA", 85, 224, 1, TFT_SILVER, TFT_NAVY);
 }
