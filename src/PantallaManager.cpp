@@ -109,7 +109,7 @@ void PantallaManager::actualizarInterfaz(String hora, String fecha, float temp, 
         
         // Pintamos el periodo en tamaño 2 corrido a la derecha (X=290).
         // Se ubica en Y=94 para que se centre verticalmente respecto al tamaño 3.
-        mostrarTexto(horaPeriodo, 270, 64, 2, TFT_BROWN, TFT_NAVY);
+        mostrarTexto(horaPeriodo, 270, 64, 2, TFT_GOLD, TFT_NAVY);
 
         // Recuadro de Temperatura en color azul cielo
         tft.drawRect(10, 135, 300, 55, TFT_SKYBLUE);
