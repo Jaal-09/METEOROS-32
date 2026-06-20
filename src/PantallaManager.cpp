@@ -96,7 +96,20 @@ void PantallaManager::actualizarInterfaz(String hora, String fecha, float temp, 
         // Recuadro de Hora y Fecha en color verde
         tft.drawRect(10, 50, 300, 75, TFT_GREEN);
         mostrarTexto("FECHA: " + fecha, 20, 60, 2, TFT_GREEN, TFT_NAVY);
-        mostrarTexto("HORA:  " + hora, 20, 90, 3, TFT_WHITE, TFT_NAVY);
+
+        
+        // mostrarTexto("HORA:  " + hora, 20, 90, 3, TFT_WHITE, TFT_NAVY);
+
+        //Corrección para añadir am y pm mas pequeño 
+        String horaNumeros = hora.substring(0, 8);
+        String horaPeriodo = hora.substring(8); 
+
+        // Pintamos la etiqueta y los números en tamaño grande (Tamaño 3)
+        mostrarTexto("HORA:  " + horaNumeros, 20, 90, 3, TFT_WHITE, TFT_NAVY);
+        
+        // Pintamos el periodo en tamaño 2 corrido a la derecha (X=290).
+        // Se ubica en Y=94 para que se centre verticalmente respecto al tamaño 3.
+        mostrarTexto(horaPeriodo, 270, 64, 2, TFT_BROWN, TFT_NAVY);
 
         // Recuadro de Temperatura en color azul cielo
         tft.drawRect(10, 135, 300, 55, TFT_SKYBLUE);

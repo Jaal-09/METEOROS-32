@@ -16,7 +16,6 @@ RelojManager::RelojManager() {
 }
 
 bool RelojManager::iniciar() {
-
     // Intentamos establecer comunicación con el integrado DS1307 en su dirección I2C fija
     if (!rtc.begin()) {
         Serial.println("[ERROR] No se detecta el hardware del DS1307.");
@@ -96,7 +95,6 @@ void RelojManager::sincronizarHoraPorWiFi(const char* ssid, const char* password
 }
 
 String RelojManager::formatearDosDigitos(int numero) {
-
     // Si el valor numérico es de un solo dígito, le concatenamos un "0" a la izquierda
     if (numero < 10) {
         return "0" + String(numero);
@@ -105,16 +103,33 @@ String RelojManager::formatearDosDigitos(int numero) {
 }
 
 String RelojManager::obtenerHora() {
-
     // Captura los registros actuales del chip de tiempo
     DateTime ahora = rtc.now(); 
-    return formatearDosDigitos(ahora.hour()) + ":" +
-           formatearDosDigitos(ahora.minute()) + ":" +
-           formatearDosDigitos(ahora.second());
+    
+    int hora24 = ahora.hour();
+    int minuto = ahora.minute();
+    int segundo = ahora.second();
+    
+    // 1. Corrección del reloj para Tener AM y PM evitar error de 00.
+    // (Ej: Las 12:00. es PM, las 00:00 es 12:00 AM)
+    String periodo = (hora24 >= 12) ? " PM" : " AM";
+    
+    // 2. Convertir el formato de 24 horas a un rango de 0 a 11
+    int hora12 = hora24 % 12;
+     
+    // lo obligamos a transformarse en 12 para evitar el "00".
+    if (hora12 == 0) {
+        hora12 = 12;
+    }
+    
+    // 4. Retornamos la cadena final armada con tu método de formato de ceros
+    return formatearDosDigitos(hora12) + ":" +
+           formatearDosDigitos(minuto) + ":" +
+           formatearDosDigitos(segundo) +
+           periodo;
 }
 
 String RelojManager::obtenerFecha() {
-
     // Captura los registros actuales del chip de tiempo
     DateTime ahora = rtc.now();
     return formatearDosDigitos(ahora.day()) + "/" +
