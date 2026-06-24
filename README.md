@@ -71,7 +71,7 @@ Para evitar colisiones de direcciones en el bus y disminuir la capacitancia par�
 
 ![Diagrama de Conexiones Físicas](./images/DiagramaConexiones.png)
 
-*Montaje físico del ESP32, ordenamiento de sensores en protoboard y cableado del bus paralelo.*
+*Montaje físico del ESP32, ordenamiento de sensores y cableado del bus paralelo.*
 
 ---
 
